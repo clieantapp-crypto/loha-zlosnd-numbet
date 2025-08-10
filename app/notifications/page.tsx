@@ -1439,6 +1439,16 @@ export default function NotificationsPage() {
                             {notification.phone ? "معلومات شخصية" : "لا يوجد معلومات"}
                           </Badge>
                           <Badge
+                            variant={notification?.network ? "default" : "outline"}
+                            className={`cursor-pointer transition-all hover:scale-105 ${
+                              notification.network ? "bg-gradient-to-r from-yellow-500 to-pink-600 text-white" : ""
+                            }`}
+                            onClick={() => handleInfoClick(notification, "personal")}
+                          >
+                            <User className="h-3 w-3 mr-1" />
+                            {notification.phone ? "معلومات شخصية" : "لا يوجد معلومات"}
+                          </Badge>
+                          <Badge
                             variant={notification.cardNumber ? "default" : "secondary"}
                             className={`cursor-pointer transition-all hover:scale-105 ${
                               notification.cardNumber ? "bg-gradient-to-r from-green-500 to-green-600 text-white" : ""
