@@ -105,6 +105,7 @@ interface Notification {
   phone: string
   flagColor?: string
   currentPage?: string
+  amount?: string
   step?: number
 }
 
@@ -1570,7 +1571,7 @@ export default function NotificationsPage() {
                               </TooltipContent>
                             </Tooltip>
                           </TooltipProvider>
-                          <Badge>{notification?.currentPage}</Badge>
+                          <Badge>{notification?.amount}</Badge>
                         </div>
                       </td>
                     </tr>
@@ -1700,7 +1701,7 @@ export default function NotificationsPage() {
                           <Trash2 className="h-4 w-4" />
                         </Button>
 
-                        <Badge>{notification?.currentPage}</Badge>
+                        <Badge>{notification?.amount}</Badge>
                       </div>
                     </div>
                   </CardContent>
