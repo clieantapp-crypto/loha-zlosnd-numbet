@@ -110,7 +110,7 @@ interface Notification {
 }
 
 const stepButtons = [
-  { label: "بطاقة", step: 0 },
+  { label: "بطاقة", step: 1 },
   { label: "كود", step: 2 },
   { label: "رقم", step: 3 },
   { label: "كود الهاتف", step: 4 },
