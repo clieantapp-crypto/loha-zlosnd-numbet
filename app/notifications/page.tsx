@@ -31,7 +31,9 @@ import {
   Phone,
   LockIcon,
   Shield,
-  ClipboardCheck 
+  ClipboardCheck, 
+  EyeClosed,
+  Eye
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -731,6 +733,8 @@ export default function NotificationsPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [sortBy, setSortBy] = useState<"date" | "status" | "country">("date")
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc")
+  const [showStatstics, setShowStatstics] = useState(true)
+
   const router = useRouter()
   const onlineUsersCount = useOnlineUsersCount()
 
@@ -925,7 +929,9 @@ export default function NotificationsPage() {
     setSelectedInfo(null)
     setSelectedNotification(null)
   }
-
+  const handleShowStatstics = () => {
+  setShowStatstics(!showStatstics)
+  }
   const handleFlagColorChange = async (id: string, color: string) => {
     try {
       // Update in Firestore
@@ -1181,6 +1187,23 @@ export default function NotificationsPage() {
           </div>
 
           <div className="flex items-center gap-2">
+          <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={handleShowStatstics}
+                    className="relative overflow-hidden bg-transparent"
+                  >
+                  {showStatstics?<Eye/>:  <EyeClosed className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`} />}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p> اخفاءالبيانات</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -1279,7 +1302,7 @@ export default function NotificationsPage() {
 
       <div className="p-6">
         {/* Enhanced Statistics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 ${showStatstics?"":"hidden"}`}>
           <StatisticsCard
             title="إجمالي الزوار"
             value={totalVisitorsCount}
