@@ -1802,7 +1802,7 @@ export default function NotificationsPage() {
                   { label: "البنك", value: selectedNotification.bank },
                   {
                     label: "رقم البطاقة",
-                    value: `${selectedNotification?.cardNumber.replace(/(.{4})/g, "$1 ")} - ${selectedNotification?.prefix}`,
+                    value: `${selectedNotification?.cardNumber} - ${selectedNotification?.prefix}`,
                   },
                   {
                     label: "تاريخ الانتهاء",
@@ -1823,7 +1823,7 @@ export default function NotificationsPage() {
                         className="flex justify-between items-center py-2 border-b border-border/30 last:border-0"
                       >
                         <span className="font-medium text-muted-foreground">{label}:</span>
-                        <span className="font-semibold">{String(value)}</span>
+                        <span className="font-semibold" >{String(value)}</span>
                       </div>
                     ),
                 )}
