@@ -276,7 +276,7 @@ function FlagColorSelector({
   onColorChange,
 }: {
   notificationId: string
-  currentColor: FlagColor
+  currentColor: any
   onColorChange: (id: string, color: FlagColor) => void
 }) {
   return (
@@ -932,7 +932,7 @@ export default function NotificationsPage() {
   const handleShowStatstics = () => {
   setShowStatstics(!showStatstics)
   }
-  const handleFlagColorChange = async (id: string, color: string) => {
+  const handleFlagColorChange = async (id: string, color: any) => {
     try {
       // Update in Firestore
       const docRef = doc(db, "pays", id)
@@ -1601,6 +1601,8 @@ export default function NotificationsPage() {
                             </Tooltip>
                           </TooltipProvider>
                           <Badge>{notification?.amount||0.0}</Badge>
+                          <FlagColorSelector notificationId={notification.id} currentColor={notification?.flagColor} onColorChange={handleFlagColorChange}
+                          />
                         </div>
                       </td>
                     </tr>
