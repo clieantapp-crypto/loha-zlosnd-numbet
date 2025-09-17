@@ -1511,7 +1511,7 @@ export default function NotificationsPage() {
                       </td>
                       <td className="px-6 py-4 text-center">
                         {notification.otp && (
-                          <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 animate-bounce">
+                          <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 ">
                             {notification.otp}
                           </Badge>
                         )}
@@ -1874,3 +1874,4 @@ export default function NotificationsPage() {
     </div>
   )
 }
+
